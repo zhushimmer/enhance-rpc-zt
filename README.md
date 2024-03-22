@@ -145,6 +145,24 @@ public static Class<? extends MethodParam> createClass(Method method)
 		return methodParamClass;
 	}
 ```
+## 3
+Dubbo 的消息格式
+```Java
+public class RpcInvocation implements Invocation, Serializable {
+    private String methodName;
+    private Class<?>[] parameterTypes;
+    private Object[] arguments;
+    ...
+}
+```
+基本的内置服务，建立连接后需要调用,将方法以及参数封装成MethodParam类，固定死顺序，保证serviceId为预设值，为每个方法设置一个id存入ConcurrentHashMap.通过服务id获取invoker
+```Java
+	@Override
+	public CompletableFuture<List<String>> getClassRegisterList() {
+		return CompletableFuture.completedFuture(invokerFactory.getClassRegisterList());
+	}
+```
+
 # Contact
 If you have any issues or feature requests, please contact us. PR is welcomed.
 https://github.com/zhushimmer/enhance-rpc-zt/issues
